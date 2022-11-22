@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,10 +33,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             CursoJetpackComposeTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                //Surface(
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.background)
+                        .verticalScroll(rememberScrollState())
                 ) {
+                    TwitterScreen()
+                    TwitDivider()
+                    TwitterScreen()
                     /*
                     val myOptions = GetOptions(listOf("Julian", "Ejemplo", "Test"))
                     Column {
@@ -53,7 +60,7 @@ class MainActivity : ComponentActivity() {
                     MyRadioButtonList(selected) { selected = it }
                     MySpacer(size = 10)
                      */
-
+                    /*
                     /****** START: DIALOGOS *********/
                     var isVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -67,7 +74,7 @@ class MainActivity : ComponentActivity() {
                         MyConfirmationDialog(isVisible, onDismiss = { isVisible = false })
                     }
                     /****** END: DIALOGOS *********/
-
+                    */
                     /*
                     //State hoisting la variable se declara en el padre para poder accederla desde más de un hijo si es necesario
                     var myTest by remember { mutableStateOf("JDCJ") }
