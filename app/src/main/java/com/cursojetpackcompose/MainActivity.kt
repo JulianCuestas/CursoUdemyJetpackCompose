@@ -33,16 +33,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             CursoJetpackComposeTheme {
                 // A surface container using the 'background' color from the theme
-                //Surface(
-                Column(
+                Surface(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.background)
-                        .verticalScroll(rememberScrollState())
+                        .fillMaxSize(),
+                    color = MaterialTheme.colors.background
                 ) {
-                    TwitterScreen()
+                    //SimpleRecyclerView()
+                    SuperHeroView()
+
+                    /*TwitterScreen()
                     TwitDivider()
                     TwitterScreen()
+                     */
                     /*
                     val myOptions = GetOptions(listOf("Julian", "Ejemplo", "Test"))
                     Column {
