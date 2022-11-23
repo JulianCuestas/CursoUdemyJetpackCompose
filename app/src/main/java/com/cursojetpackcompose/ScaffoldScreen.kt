@@ -2,11 +2,8 @@ package com.cursojetpackcompose
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -23,7 +20,8 @@ fun MyScaffold() {
                 }
             }
         },
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        bottomBar = { MyBottomNavigation() }
     ) {
 
     }
@@ -50,4 +48,29 @@ fun MyTopAppBar(onClickIcon: (String) -> Unit) {
             }
         }
     )
+}
+
+@Composable
+fun MyBottomNavigation() {
+    var index by remember { mutableStateOf(0) }
+    BottomNavigation(
+        backgroundColor = Color.Blue,
+        contentColor = Color.White
+    ) {
+        BottomNavigationItem(
+            selected = index == 0, onClick = { index = 0 },
+            icon = { Icon(imageVector = Icons.Filled.Home, contentDescription = "Home") },
+            label = { Text(text = "Home") }
+        )
+        BottomNavigationItem(
+            selected = index == 1, onClick = { index = 1 },
+            icon = { Icon(imageVector = Icons.Filled.Settings, contentDescription = "Tools") },
+            label = { Text(text = "Tools") }
+        )
+        BottomNavigationItem(
+            selected = index == 2, onClick = { index = 2 },
+            icon = { Icon(imageVector = Icons.Filled.Person, contentDescription = "Profile") },
+            label = { Text(text = "Profile") }
+        )
+    }
 }
