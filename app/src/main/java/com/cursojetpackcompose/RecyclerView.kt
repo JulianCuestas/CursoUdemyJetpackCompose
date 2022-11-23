@@ -7,10 +7,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cursojetpackcompose.model.SuperHero
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -85,11 +87,54 @@ fun SuperHeroView() {
 }
 
 @Composable
+fun SuperHeroWithSpecialControlsView() {
+    val context = LocalContext.current
+    val rvState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+
+    Column {
+        LazyColumn(
+            state = rvState,
+            verticalArrangement = Arrangement.spacedBy(8.dp),// Separador entre items
+            modifier = Modifier.weight(1f)
+        ) {
+            items(getSuperHeroes()) {
+                DrawItemHero(superHero = it) {
+                    Toast.makeText(context, it.superHeroName, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        val showButton by remember {
+            derivedStateOf { // Optimiza la recomposición de la vista al scroollear la view
+                rvState.firstVisibleItemIndex > 0
+            }
+        }
+
+        rvState.firstVisibleItemScrollOffset // Entrega un valor en una escala dependiendo del sitio donde esté parado en el scroll de X a Y
+
+        if (showButton) {
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                          rvState.animateScrollToItem(0)
+                    }
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(text = "Go Top")
+            }
+        }
+    }
+
+}
+
+@Composable
 fun DrawItemHero(superHero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
     Card(
         border = BorderStroke(2.dp, Color.Red),
         modifier = Modifier
-            .width(200.dp)
+            //.width(200.dp)
             .clickable {
                 onItemSelected(superHero)
             }

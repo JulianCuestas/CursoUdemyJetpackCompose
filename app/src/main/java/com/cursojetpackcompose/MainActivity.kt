@@ -40,7 +40,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //SimpleRecyclerView()
                     //SuperHeroView()
-                    SuperHeroGridView()
+                    //SuperHeroGridView()
+                    SuperHeroWithSpecialControlsView()
 
                     /*TwitterScreen()
                     TwitDivider()
