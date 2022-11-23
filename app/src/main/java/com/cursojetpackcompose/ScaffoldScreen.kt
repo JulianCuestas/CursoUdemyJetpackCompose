@@ -21,7 +21,10 @@ fun MyScaffold() {
             }
         },
         scaffoldState = scaffoldState,
-        bottomBar = { MyBottomNavigation() }
+        bottomBar = { MyBottomNavigation() },
+        floatingActionButton = { MyFAB() },
+        floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true
     ) {
 
     }
@@ -62,15 +65,26 @@ fun MyBottomNavigation() {
             icon = { Icon(imageVector = Icons.Filled.Home, contentDescription = "Home") },
             label = { Text(text = "Home") }
         )
-        BottomNavigationItem(
+        /*BottomNavigationItem(
             selected = index == 1, onClick = { index = 1 },
             icon = { Icon(imageVector = Icons.Filled.Settings, contentDescription = "Tools") },
             label = { Text(text = "Tools") }
-        )
+        )*/
         BottomNavigationItem(
             selected = index == 2, onClick = { index = 2 },
             icon = { Icon(imageVector = Icons.Filled.Person, contentDescription = "Profile") },
             label = { Text(text = "Profile") }
         )
+    }
+}
+
+@Composable
+fun MyFAB() {
+    FloatingActionButton(
+        onClick = {  },
+        backgroundColor = Color.Yellow,
+        contentColor = Color.Black
+    ) {
+        Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
     }
 }
