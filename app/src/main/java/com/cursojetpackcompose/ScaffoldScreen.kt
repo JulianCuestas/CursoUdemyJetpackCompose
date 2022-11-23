@@ -1,9 +1,14 @@
 package com.cursojetpackcompose
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -14,32 +19,48 @@ fun MyScaffold() {
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
-        topBar = { MyTopAppBar {
-                coroutineScope.launch {
-                    scaffoldState.snackbarHostState.showSnackbar("Has pulsado $it")
+        topBar = {
+            MyTopAppBar(
+                onClickIcon = {
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar("Has pulsado $it")
+                    }
+                },
+                onClickDrawer = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
                 }
-            }
+            )
         },
         scaffoldState = scaffoldState,
         bottomBar = { MyBottomNavigation() },
         floatingActionButton = { MyFAB() },
         floatingActionButtonPosition = FabPosition.Center,
-        isFloatingActionButtonDocked = true
+        isFloatingActionButtonDocked = true,
+        drawerContent = {
+            MyDrawer {
+                coroutineScope.launch {
+                    scaffoldState.drawerState.close()
+                }
+            }
+        },
+        drawerGesturesEnabled = false
     ) {
 
     }
 }
 
 @Composable
-fun MyTopAppBar(onClickIcon: (String) -> Unit) {
+fun MyTopAppBar(onClickIcon: (String) -> Unit, onClickDrawer: () -> Unit) {
     TopAppBar(
         title = { Text(text = "Mi primera topbar") },
         backgroundColor = Color.Blue,
         contentColor = Color.White,
         elevation = 4.dp,
         navigationIcon = {
-            IconButton(onClick = { onClickIcon("Atrás") }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "back")
+            IconButton(onClick = { onClickDrawer() }) {
+                Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
             }
         },
         actions = {
@@ -86,5 +107,35 @@ fun MyFAB() {
         contentColor = Color.Black
     ) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
+    }
+}
+
+@Composable
+fun MyDrawer(onCloseDrawer: () -> Unit) {
+    Column(
+        Modifier.padding(8.dp)
+    ) {
+        Text(
+            text = "Opción 1",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .clickable { onCloseDrawer() }
+        )
+        Text(text = "Opción 2", modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { onCloseDrawer() }
+        )
+        Text(text = "Opción 3", modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { onCloseDrawer() }
+        )
+        Text(text = "Opción 4", modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { onCloseDrawer() }
+        )
     }
 }
