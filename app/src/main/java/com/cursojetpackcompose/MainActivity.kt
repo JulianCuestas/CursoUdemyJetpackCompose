@@ -2,14 +2,11 @@ package com.cursojetpackcompose
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -24,6 +21,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.cursojetpackcompose.ui.CheckInfo
 import com.cursojetpackcompose.ui.theme.CursoJetpackComposeTheme
 
@@ -38,13 +38,20 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    val navigationController = rememberNavController()
+                    NavHost(navController = navigationController, startDestination = "screen1") {
+                        composable("screen1") { Screen1(navigationController) }
+                        composable("screen2") { Screen2(navigationController) }
+                        composable("screen3") { Screen3(navigationController) }
+                    }
+
                     //SimpleRecyclerView()
                     //SuperHeroView()
                     //SuperHeroGridView()
                     //SuperHeroWithSpecialControlsView()
                     //SuperHeroStickyView()
 
-                    MyScaffold()
+                    //MyScaffold()
 
                     /*TwitterScreen()
                     TwitDivider()
