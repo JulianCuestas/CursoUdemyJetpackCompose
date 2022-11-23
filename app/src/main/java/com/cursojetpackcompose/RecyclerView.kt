@@ -1,10 +1,7 @@
 package com.cursojetpackcompose
 
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.Button
@@ -127,6 +124,33 @@ fun SuperHeroWithSpecialControlsView() {
         }
     }
 
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SuperHeroStickyView() {
+    val context = LocalContext.current
+    val superHeroeMap: Map<String, List<SuperHero>> = getSuperHeroes().groupBy { it.publisher }
+
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp)// Separador entre items
+    ) {
+        superHeroeMap.forEach { (publisher, mySuperHero) ->
+            stickyHeader {
+                Text(
+                    text = publisher,
+                    modifier = Modifier.fillMaxWidth().background(Color.Green),
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+            }
+            items(mySuperHero) {
+                DrawItemHero(superHero = it) {
+                    Toast.makeText(context, it.superHeroName, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 }
 
 @Composable
