@@ -42,7 +42,9 @@ class MainActivity : ComponentActivity() {
                     //SuperHeroView()
                     //SuperHeroGridView()
                     //SuperHeroWithSpecialControlsView()
-                    SuperHeroStickyView()
+                    //SuperHeroStickyView()
+
+                    MyScaffold()
 
                     /*TwitterScreen()
                     TwitDivider()
