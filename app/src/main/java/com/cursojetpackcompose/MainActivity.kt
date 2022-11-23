@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cursojetpackcompose.model.Routes
 import com.cursojetpackcompose.ui.CheckInfo
 import com.cursojetpackcompose.ui.theme.CursoJetpackComposeTheme
 
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navigationController = rememberNavController()
-                    NavHost(navController = navigationController, startDestination = "screen1") {
+                    NavHost(navController = navigationController, startDestination = Routes.Screen1.route) {
                         composable("screen1") { Screen1(navigationController) }
                         composable("screen2") { Screen2(navigationController) }
                         composable("screen3") { Screen3(navigationController) }
