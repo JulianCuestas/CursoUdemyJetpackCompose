@@ -39,7 +39,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //SimpleRecyclerView()
-                    SuperHeroView()
+                    //SuperHeroView()
+                    SuperHeroGridView()
 
                     /*TwitterScreen()
                     TwitDivider()

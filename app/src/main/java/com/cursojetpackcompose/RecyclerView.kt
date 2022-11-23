@@ -2,12 +2,11 @@ package com.cursojetpackcompose
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -50,6 +49,25 @@ fun SimpleRecyclerView() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SuperHeroGridView() {
+    val context = LocalContext.current
+    LazyVerticalGrid(
+        cells = GridCells.Fixed(2),  // GridCells.Adaptative(100.dp) Asigna mínimo 100dp a cada item hasta adaptarlo
+        content = {
+            items(getSuperHeroes()) {
+                DrawItemHero(superHero = it) {
+                    Toast.makeText(context, it.superHeroName, Toast.LENGTH_SHORT).show()
+                }
+            }
+        },
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(8.dp)
+    )
+}
+
 @Composable
 fun SuperHeroView() {
     val context = LocalContext.current
@@ -70,9 +88,11 @@ fun SuperHeroView() {
 fun DrawItemHero(superHero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
     Card(
         border = BorderStroke(2.dp, Color.Red),
-        modifier = Modifier.width(200.dp).clickable {
-            onItemSelected(superHero)
-        }
+        modifier = Modifier
+            .width(200.dp)
+            .clickable {
+                onItemSelected(superHero)
+            }
     ) {
         Column {
             Image(
@@ -90,7 +110,9 @@ fun DrawItemHero(superHero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
             Text(
                 text = superHero.publisher,
                 fontSize = 10.sp,
-                modifier = Modifier.align(Alignment.End).padding(8.dp)
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(8.dp)
             )
         }
     }
