@@ -21,9 +21,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.cursojetpackcompose.model.Routes
 import com.cursojetpackcompose.ui.CheckInfo
 import com.cursojetpackcompose.ui.theme.CursoJetpackComposeTheme
@@ -41,9 +43,27 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navigationController = rememberNavController()
                     NavHost(navController = navigationController, startDestination = Routes.Screen1.route) {
-                        composable("screen1") { Screen1(navigationController) }
-                        composable("screen2") { Screen2(navigationController) }
-                        composable("screen3") { Screen3(navigationController) }
+                        composable(Routes.Screen1.route) { Screen1(navigationController) }
+                        composable(Routes.Screen2.route) { Screen2(navigationController) }
+                        composable(Routes.Screen3.route) { Screen3(navigationController) }
+                        composable(
+                            Routes.Screen4.route,
+                            arguments = listOf(navArgument("age") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            Screen4(
+                                navigationController,
+                                backStackEntry.arguments?.getInt("age") ?: 0
+                            )
+                        }
+                        composable(
+                            Routes.Screen5.route,
+                            arguments = listOf(navArgument("name") { defaultValue = "Test" })
+                        ) { backStackEntry ->
+                            Screen5(
+                                navigationController,
+                                backStackEntry.arguments?.getString("name")
+                            )
+                        }
                     }
 
                     //SimpleRecyclerView()
