@@ -17,9 +17,18 @@ fun Screen1(navController: NavHostController) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Color.DarkGray)) {
-        Text(text = "Screen 1", modifier = Modifier
-            .align(Alignment.Center)
-            .clickable { navController.navigate(Routes.Screen2.route) })
+        Column(
+            modifier = Modifier.align(Alignment.Center)
+        ) {
+            Text(
+                text = "Screen 1",
+                modifier = Modifier
+                .clickable { navController.navigate(Routes.Screen2.route) }
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            ColorSimpleAnimation()
+        }
+
     }
 }
 
