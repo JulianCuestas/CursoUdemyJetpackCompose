@@ -26,7 +26,7 @@ fun Screen1(navController: NavHostController) {
                 .clickable { navController.navigate(Routes.Screen2.route) }
             )
             Spacer(modifier = Modifier.height(15.dp))
-            ColorSimpleAnimation()
+            Animations()
         }
 
     }

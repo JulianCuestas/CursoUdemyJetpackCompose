@@ -1,11 +1,13 @@
 package com.cursojetpackcompose
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,27 +19,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ColorSimpleAnimation() {
+fun Animations() {
     Column() {
-        var firstColor by rememberSaveable { mutableStateOf(false) }
-        val realColor = if (firstColor) Color.Red else Color.Yellow
-
-        Box(modifier = Modifier
-            .size(100.dp)
-            .background(realColor)
-            .clickable { firstColor = !firstColor }) {
-
-        }
-
-        Spacer(modifier = Modifier.height(50.dp))
 
         var activeChangeText  by rememberSaveable { mutableStateOf(false) }
 
         var secondColor by rememberSaveable { mutableStateOf(false) }
         val realColor2 by animateColorAsState(
             targetValue = if (secondColor) Color.Blue else Color.Red,
-            animationSpec = tween(durationMillis = 1500),// Tiempo de transición
-            finishedListener = { activeChangeText = !activeChangeText }
+            animationSpec = tween(durationMillis = 500),// Tiempo de transición
+            finishedListener = { activeChangeText = !activeChangeText }// acción ejecutable al finalizar la aanimación
         )
 
         Box(modifier = Modifier
@@ -59,22 +50,41 @@ fun ColorSimpleAnimation() {
             }
         }
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         SizeAnimation()
 
+        Spacer(modifier = Modifier.height(30.dp))
+        VisibilityAnimation()
     }
 }
 
 @Composable
 fun SizeAnimation() {
-
     var smallSize by rememberSaveable { mutableStateOf(true) }
-    val size = animateDpAsState(targetValue = if (smallSize) 50.dp else 100.dp)
-
+    val size = animateDpAsState(
+        targetValue = if (smallSize) 50.dp else 100.dp,
+        animationSpec = tween(durationMillis = 500),// Tiempo de transición
+    )
     Box(modifier = Modifier
         .size(size.value)
         .background(Color.Cyan)
         .clickable { smallSize = !smallSize }) {
 
+    }
+}
+
+@Composable
+fun VisibilityAnimation() {
+    var isVisible by rememberSaveable { mutableStateOf(true) }
+    Button(onClick = { isVisible = !isVisible }) {
+        Text(text = "Mostrar/Ocultar")
+    }
+    Spacer(modifier = Modifier.height(15.dp))
+    AnimatedVisibility (isVisible) {
+        Box(
+            modifier = Modifier
+                .size(100.dp)
+                .background(Color.Green)
+        ) {}
     }
 }
