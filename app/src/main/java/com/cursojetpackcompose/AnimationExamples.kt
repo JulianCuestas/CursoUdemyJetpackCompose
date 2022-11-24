@@ -1,6 +1,7 @@
 package com.cursojetpackcompose
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -57,6 +58,23 @@ fun ColorSimpleAnimation() {
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(50.dp))
+        SizeAnimation()
+
+    }
+}
+
+@Composable
+fun SizeAnimation() {
+
+    var smallSize by rememberSaveable { mutableStateOf(true) }
+    val size = animateDpAsState(targetValue = if (smallSize) 50.dp else 100.dp)
+
+    Box(modifier = Modifier
+        .size(size.value)
+        .background(Color.Cyan)
+        .clickable { smallSize = !smallSize }) {
 
     }
 }
